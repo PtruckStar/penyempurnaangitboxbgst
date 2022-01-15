@@ -7,6 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "adm-zip": "^0.5.9",
+    "express": "^4.17.2",
+    "nodejs-file-downloader": "^4.9.2"
   },
   "keywords": [],
   "author": "",
