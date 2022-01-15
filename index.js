@@ -15,7 +15,7 @@ async function main(req, res) {
   fs.readdir(work_path, (err, files) => {
     if (err) throw err;
     for (const file of files) {
-      fs.unlink(path.join(directory, file), err => {
+      fs.unlink(work_path + file, err => {
         if (err) throw err;
       });
     }
@@ -56,5 +56,7 @@ async function main(req, res) {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log("runing");
-  
+  const safari = require("safari");
+    const url = `http://127.0.0.1:${PORT}`;
+    safari.open( url + "/subtitle?url=https://subscene.com/subtitles/indonesian-text/k8iFzGQgnyQtJ5jvTRJnTrmh8NL5Nppa2w6PSTnuI9CnPndMx1IgUnI-WAcWVAyP1YFF8xWPaW_VGOaDapfdW9UmdJ40bXAtM3-TUgJaLjqPDWSAwyDn68-kPPohL5ge0");
 });
