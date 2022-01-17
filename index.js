@@ -9,18 +9,15 @@ const work_path = __dirname + "/temp/";
 
 /* --- routers --- */
 app.get("/subtitle", main);
+app.get("/subtitle/last", (req, res) => {
+  const sub = work_path + "sub.vtt"
+  fs.access(sub, fs.constants.F_OK, (err) => {
+    if(err) res.status(404).json({ok: false, msg: "gak ada file subtitle cok"})
+    res.status(200).download(sub)
+  });
+})
 
 async function main(req, res) {
-  //clear prev temporary file
-  fs.readdir(work_path, (err, files) => {
-    if (err) throw err;
-    for (const file of files) {
-      fs.unlink(work_path + file, err => {
-        if (err) throw err;
-      });
-    }
-  });
-  
   const {url} = req.query;
   const handleError = error => {
     console.log(error);
@@ -38,6 +35,15 @@ async function main(req, res) {
   });
 
   try {
+    //clear prev temporary file
+    fs.readdir(work_path, (err, files) => {
+      if (err) throw err;
+      for (const file of files) {
+        fs.unlink(work_path + file, err => {
+          if (err) throw err;
+        });
+      }
+    });
     await downloader.download();
     const zip = new Ziper(work_path + "sub.zip");
     await zip.extractAllTo(work_path);
@@ -56,4 +62,5 @@ async function main(req, res) {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log("runing");
+  const o = require("./dev.js")();
 });

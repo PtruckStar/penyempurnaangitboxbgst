@@ -1,3 +1,5 @@
 exclude.js
 package-lock.json
 node_modules
+dev.js
+finder.js
